@@ -7,7 +7,26 @@ KIND = "Task"
 
 @app.get("/")
 def home():
-    return "B8IS124 CA1 - App Engine + Datastore Mode is running"
+    return """
+    <div style="
+        background: #0f9d58;
+        color: white;
+        padding: 12px 18px;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        border-radius: 8px;
+        display: inline-block;
+        margin-bottom: 16px;
+    ">
+        🟢 Live on Google Cloud · Auto-deployed via CI/CD
+    </div>
+    <h2 style="font-family: Arial, sans-serif;">
+        B8IS124 CA1 – App Engine + Firestore (Datastore mode)
+    </h2>
+    <p style="font-family: Arial, sans-serif;">
+        This application demonstrates cloud deployment, persistent storage, and automated CI/CD.
+    </p>
+    """
 
 @app.post("/add")
 def add_item():
@@ -27,5 +46,8 @@ def list_tasks():
     query = db.query(kind=KIND)
     tasks = []
     for entity in list(query.fetch()):
-        tasks.append({"id": entity.key.id, "task": entity.get("task", "")})
+        tasks.append({
+            "id": entity.key.id,
+            "task": entity.get("task", "")
+        })
     return jsonify(tasks)
